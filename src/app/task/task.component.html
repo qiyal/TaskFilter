@@ -1,0 +1,113 @@
+<h1>List of Tasks</h1>
+
+<!--<div class="example-header">-->
+<!--  <mat-form-field>-->
+<!--    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">-->
+<!--  </mat-form-field>-->
+<!--</div>-->
+
+<button (click)="create()">Create</button>
+
+<div>
+  <h3>Filter:</h3>
+  <form [formGroup]="formStatus">
+    <select formControlName="status" name="status" (change)="setFilterStatus()">
+      <option value="Completed">Completed</option>
+      <option value="Active">Active</option>
+      <option value="Not Resolved">Not resolved</option>
+      <option value="none">None</option>
+    </select>
+  </form>
+
+  <form [formGroup]="formImportance">
+    <input type="number" formControlName="importance" name="importance" (change)="setFilterImportance()">
+  </form>
+
+<!--  <h3>Sort by name:</h3>-->
+<!--  <form [formGroup]="formName">-->
+<!--    <input type="text" formControlName="name" name="name" (change)="setSortName()">-->
+<!--  </form>-->
+</div>
+
+<!--<div class="example-container mat-elevation-z8">-->
+
+<!--  <mat-table [dataSource]="dataTask" matSort>-->
+
+<!--    &lt;!&ndash; ID Column &ndash;&gt;-->
+<!--    <ng-container matColumnDef="id">-->
+<!--      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>-->
+<!--      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>-->
+<!--    </ng-container>-->
+
+<!--    &lt;!&ndash; Progress Column &ndash;&gt;-->
+<!--    <ng-container matColumnDef="name">-->
+<!--      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>-->
+<!--      <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>-->
+<!--    </ng-container>-->
+
+<!--    &lt;!&ndash; Name Column &ndash;&gt;-->
+<!--    <ng-container matColumnDef="createDate">-->
+<!--      <mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </mat-header-cell>-->
+<!--      <mat-cell *matCellDef="let row"> {{row.createDate}} </mat-cell>-->
+<!--    </ng-container>-->
+
+<!--    &lt;!&ndash; Color Column &ndash;&gt;-->
+<!--    <ng-container matColumnDef="importance">-->
+<!--      <mat-header-cell *matHeaderCellDef mat-sort-header> Importance </mat-header-cell>-->
+<!--      <mat-cell *matCellDef="let row"> {{row.importance}} </mat-cell>-->
+<!--    </ng-container>-->
+
+<!--    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>-->
+<!--    <mat-row *matRowDef="let row; columns: displayedColumns;">-->
+<!--    </mat-row>-->
+<!--  </mat-table>-->
+
+<!--  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>-->
+<!--</div>-->
+
+<table mat-table [dataSource]="dataTask" class="mat-elevation-z8">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> ID </th>
+    <th mat-cell *matCellDef="let element"> {{element.id}} </th>
+  </ng-container>
+
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> Task Body </th>
+    <th mat-cell *matCellDef="let element"> {{element.name}} </th>
+  </ng-container>
+
+
+  <ng-container matColumnDef="createDate">
+    <th mat-header-cell *matHeaderCellDef> Created Date </th>
+    <th mat-cell *matCellDef="let element"> {{element.createDate | date: 'short'}} </th>
+  </ng-container>
+
+  <ng-container matColumnDef="importance">
+    <th mat-header-cell *matHeaderCellDef> Importance </th>
+    <th mat-cell *matCellDef="let element">{{element.importance}}</th>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef> Status </th>
+    <th mat-cell *matCellDef="let element">{{element.status}}</th>
+  </ng-container>
+
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <th mat-cell *matCellDef="let element">
+      <button (click)="update(element)">Update</button>
+      <button (click)="delete(element.id)">Delete</button>
+    </th>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator
+  [pageSize]="limit"
+  (page)="changeTableList($event)"
+  [pageSizeOptions]="[3, 5, 7, 10]"
+  ></mat-paginator>

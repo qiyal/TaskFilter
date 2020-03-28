@@ -1,0 +1,19 @@
+<form [formGroup]="form">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" formControlName="name">
+  <br>
+
+  <label for="importance">Importance:</label>
+  <input type="number" id="importance" name="importance" formControlName="importance">
+  <br>
+
+  <label for="status">Status:</label>
+  <select id="status" name="status" formControlName="status">
+    <option *ngIf="!new" value="Completed">Completed</option>
+    <option value="Active">Active</option>
+    <option value="Not Resolved">Not Resolved</option>
+  </select>
+  <br>
+  <button *ngIf="new" (click)="create()">create</button>
+  <button *ngIf="!new" (click)="update()">update</button>
+</form>
